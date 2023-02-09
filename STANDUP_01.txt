@@ -1,0 +1,37 @@
+# STANDUP 01 - 2/10/2023 TEAM Robomaster
+
+
+General Update and Intro
+========================
+
+Teams assembled and introduced, selected Project Leaders: Amanda Kwong and Austin Guiney
+Talked to TA
+Voted to use Jira to keep track of Working Packages/Tasks
+Created Github repo: https://github.com/amandakwong898/robomaster/
+
+Draft of Requirements
+=====================
+MAIN: We need to investigate different types of reinforcement learning algorithms by 
+training our model (Robomaster S1) to complete a certain task, and exploring the impact of 
+hyperparameters on training outcomes.
+The software needs to support
+* XX
+* XX
+..
+
+For technologies, we propose
+* XX, XX, XX
+
+
+Current Questions / Problems / Something you need
+=================================================
+* We need to get Robomasters for team members for prototyping
+* We need to figure out how to "hack" the educational Robomaster
+
+
+List of Working Packages with responsible Student and Completion Dates
+======================================================================
+* Explore Technology XX [Student1] by 2/13
+* Explore Technology YY [Student2] by 2/15
+* Create Project Logo [Student3+Student4] by 2/15
+* ...
