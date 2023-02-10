@@ -3,35 +3,40 @@
 
 General Update and Intro
 ========================
-
 Teams assembled and introduced, selected Project Leaders: Amanda Kwong and Austin Guiney
 Talked to TA
 Voted to use Jira to keep track of Working Packages/Tasks
 Created Github repo: https://github.com/amandakwong898/robomaster/
 
+
 Draft of Requirements
 =====================
 MAIN: We need to investigate different types of reinforcement learning algorithms by 
 training our model (Robomaster S1) to complete a certain task, and exploring the impact of 
-hyperparameters on training outcomes.
+hyperparameters on training outcomes. We will create interactive dashboards that display 
+key metrics and insights from our model.
 The software needs to support
-* XX
-* XX
-..
+* Self driving program around an obstacle course using computer vision
+* Use machine learning to determine the best path (try out different algorithms)
+* Data visualization (scatter plot for each algorithm)
+
+We will create separate branches for each team member and submit pull requests 
+to the main branch.
 
 For technologies, we propose
-* XX, XX, XX
+* Python, Tensorflow, Github
+* html5 ,css3 , Bootstrap, Typescript, Vue3.js, Firebase
 
 
 Current Questions / Problems / Something you need
 =================================================
 * We need to get Robomasters for team members for prototyping
-* We need to figure out how to "hack" the educational Robomaster
+* We need to figure out how to gain root access to Robomaster to use SDK external to app
 
 
 List of Working Packages with responsible Student and Completion Dates
 ======================================================================
-* Explore Technology XX [Student1] by 2/13
-* Explore Technology YY [Student2] by 2/15
-* Create Project Logo [Student3+Student4] by 2/15
-* ...
+* Investigate the Robomaster "hack." Are there limitations with the official API? [Amanda Kwong] by 2/13
+* Investigate the official API for the Robomaster [Austin Guiney] by 2/17
+* Pick up Robomasters and assemble them [Austin Guiney, Chirag Nagendra, Sanjana Nakhwa] by 2/15
+* Email Professor Haehn to sign out Robomaster by 2/10 EOD
