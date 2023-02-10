@@ -4,7 +4,7 @@
 General Update and Intro
 ========================
 Teams assembled and introduced, selected Project Leaders: Amanda Kwong and Austin Guiney
-Talked to TA
+Talked to advisor (Kunal Jain)
 Voted to use Jira to keep track of Working Packages/Tasks
 Created Github repo: https://github.com/amandakwong898/robomaster/
 We need to get and assemble Robomasters for team members for prototyping (ip)
@@ -13,9 +13,10 @@ We need to get and assemble Robomasters for team members for prototyping (ip)
 Draft of Requirements
 =====================
 MAIN: We need to investigate different types of reinforcement learning algorithms by 
-training our model (Robomaster S1) to complete a certain task, and exploring the impact of 
+training our model (Robomaster S1) to navigate an obstacle course and exploring the impact of 
 hyperparameters on training outcomes. We will create interactive dashboards that display 
 key metrics and insights from our model.
+
 The software needs to support:
 * Self driving program around an obstacle course using computer vision.
 * Use machine learning to determine the best path around the obstacle course.
@@ -34,8 +35,8 @@ Current Questions / Problems / Something you need
 =================================================
 * We need to figure out how to gain root access to Robomaster to use SDK external to app.
 * We need to figure out if the official API for the Robomaster is sufficient for our project.
-* We need to research how to acquire preprocessed data to train our RoboMaster S1.
-* Record the states, actions, and rewards of the system as the robot moves through its environment.
+* We need to research how to acquire preprocessed data to train our RoboMaster S1 (i.e. a way to 
+  record the states, actions, and rewards of the system as the robot moves through its environment).
 
 
 List of Working Packages with responsible Student and Completion Dates
