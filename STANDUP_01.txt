@@ -16,7 +16,7 @@ MAIN: We need to investigate different types of reinforcement learning algorithm
 training our model (Robomaster S1) to complete a certain task, and exploring the impact of 
 hyperparameters on training outcomes. We will create interactive dashboards that display 
 key metrics and insights from our model.
-The software needs to support
+The software needs to support:
 * Self driving program around an obstacle course using computer vision.
 * Use machine learning to determine the best path around the obstacle course.
 * Compare different path-finding algorithms. 
@@ -34,8 +34,8 @@ Current Questions / Problems / Something you need
 =================================================
 * We need to figure out how to gain root access to Robomaster to use SDK external to app.
 * We need to figure out if the official API for the Robomaster is sufficient for our project.
-* We need to research how to acquire preprocessed data to train our RoboMaster S1
-  * record the states, actions, and rewards of the system as the robot moves through its environment
+* We need to research how to acquire preprocessed data to train our RoboMaster S1.
+* Record the states, actions, and rewards of the system as the robot moves through its environment.
 
 
 List of Working Packages with responsible Student and Completion Dates
