@@ -17,7 +17,7 @@ training our model (Robomaster S1) to complete a certain task, and exploring the
 hyperparameters on training outcomes. We will create interactive dashboards that display 
 key metrics and insights from our model.
 The software needs to support
-* **Self driving program around an obstacle course using computer vision.**
+* Self driving program around an obstacle course using computer vision.
 * Use machine learning to determine the best path around the obstacle course.
 * Compare different path-finding algorithms. 
 * Data visualization (scatter plot) for each algorithm.
@@ -44,4 +44,3 @@ List of Working Packages with responsible Student and Completion Dates
 * Investigate the official API for the Robomaster [Austin Guiney] by 2/17
 * Pick up Robomasters and assemble them [Austin Guiney, Chirag Nagendra, Sanjana Nakhwa] by 2/15
 * Gather more information on Robomaster S1 and its capabilities [Austin Guiney, Chirag Nagendra, Sanjana Nakhwa] by 2/13
-* Email Professor Haehn to sign out Robomaster by 2/10 EOD
