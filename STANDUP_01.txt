@@ -7,6 +7,7 @@ Teams assembled and introduced, selected Project Leaders: Amanda Kwong and Austi
 Talked to TA
 Voted to use Jira to keep track of Working Packages/Tasks
 Created Github repo: https://github.com/amandakwong898/robomaster/
+We need to get and assemble Robomasters for team members for prototyping (ip)
 
 
 Draft of Requirements
@@ -16,22 +17,25 @@ training our model (Robomaster S1) to complete a certain task, and exploring the
 hyperparameters on training outcomes. We will create interactive dashboards that display 
 key metrics and insights from our model.
 The software needs to support
-* Self driving program around an obstacle course using computer vision
-* Use machine learning to determine the best path (try out different algorithms)
-* Data visualization (scatter plot for each algorithm)
+* Self driving program around an obstacle course using computer vision.
+* Use machine learning to determine the best path around the obstacle course.
+* Compare different path-finding algorithms. 
+* Data visualization (scatter plot) for each algorithm.
 
 We will create separate branches for each team member and submit pull requests 
 to the main branch.
 
 For technologies, we propose
 * Python, Tensorflow, Github
-* html5 ,css3 , Bootstrap, Typescript, Vue3.js, Firebase
+* HTML5, CSS3, Bootstrap, Typescript, Vue3.js, Firebase
 
 
 Current Questions / Problems / Something you need
 =================================================
-* We need to get Robomasters for team members for prototyping
-* We need to figure out how to gain root access to Robomaster to use SDK external to app
+* We need to figure out how to gain root access to Robomaster to use SDK external to app.
+* We need to figure out if the official API for the Robomaster is sufficient for our project.
+* We need to research how to acquire preprocessed data to train our RoboMaster S1
+  * record the states, actions, and rewards of the system as the robot moves through its environment
 
 
 List of Working Packages with responsible Student and Completion Dates
@@ -39,4 +43,5 @@ List of Working Packages with responsible Student and Completion Dates
 * Investigate the Robomaster "hack." Are there limitations with the official API? [Amanda Kwong] by 2/13
 * Investigate the official API for the Robomaster [Austin Guiney] by 2/17
 * Pick up Robomasters and assemble them [Austin Guiney, Chirag Nagendra, Sanjana Nakhwa] by 2/15
+* Gather more information on Robomaster S1 and its capabilities [Austin Guiney, Chirag Nagendra, Sanjana Nakhwa] by 2/13
 * Email Professor Haehn to sign out Robomaster by 2/10 EOD
