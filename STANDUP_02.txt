@@ -1,0 +1,13 @@
+** EXAMPLE **
+
+TASKS / WORKING PACKAGES
+* Introduce your team to the client (for external clients) [by 2/13/23]
+* Create list of non-technical requirements [by 2/13/23]
+* Explore first round of applicable technologies / existing work [by 2/15/23]
+
+
+DONE
+* Setup Github  [2/10/23]
+* Choose Task Manager [2/10/23]
+* First Standup [2/10/13]
+Other tasks that are project-specific should be added to your task manager list
