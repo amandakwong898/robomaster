@@ -6,5 +6,6 @@
 
 **Project Requirements:**
 1. Autonomous Driving: Navigate an obstacle course using computer vision and machine learning.
-2. Dashboard: Data visualization of autonomous driving routes and time to completion.
-3. Website: Project description and results of data visualization. 
+2. Object detection: Robomaster should be able to recognize objects and avoid them while navigating the obstacle course.
+3. Dashboard: Data visualization of autonomous driving routes and completion time.
+4. Website: Project description and results of data visualization. 
