@@ -33,8 +33,12 @@ def pixels_to_mm(pixels):
     """
     return (pixels * 25.4) / ROBOMASTER_CAMERA_DPI
 
-# Wait for a person to become visible on screen.
+# Enable person detection
+vision_ctrl.enable_detection(rm_define.vision_detection_people)
+
 print("Waiting for a person to be visible...")
+
+# Wait for a person to become visible on screen.
 vision_ctrl.cond_wait(rm_define.cond_recognized_people)
 
 print("Recognized a person...")
@@ -51,7 +55,7 @@ height_in_mm = pixels_to_mm(bounding_box_height)
 distance_in_m = distance_in_mm(height_in_mm) / 1000
 
 print("Hits: " + str(hits))
-print("Number of people found: " + str(objects_hit))
+print("Number of people found: " + str(people_hit))
 print("Height of the bounding box: " + str(height_in_mm) + " mm")
 print("Distance to person: " + str(distance_in_m) + " m")
 
