@@ -8,6 +8,10 @@ ROBOMASTER_HEIGHT_IN = 10.6
 ROBOMASTER_CAMERA_FOCAL_LENGTH = 1.0
 # Camera DPI for the Robomaster.
 ROBOMASTER_CAMERA_DPI = 72.0
+# Enum code for targeting a person.
+TARGET_PERSON = 1.0
+# Enum code for targeting a car.
+TARGET_CAR = 2.0
 
 def distance_in_mm(height):
     """
@@ -33,32 +37,91 @@ def pixels_to_mm(pixels):
     """
     return (pixels * 25.4) / ROBOMASTER_CAMERA_DPI
 
-# Enable person detection
-vision_ctrl.enable_detection(rm_define.vision_detection_people)
+def move_to_closest_target(target_type=TARGET_PERSON, speed=1.5):
+    """
+    Wait for targets to appear and then moves to the closest target.
+  
+    Parameters:
+    target_type (int): The type of target to move to.
+    
+    TARGET_PERSON targets a person.
+    TARGET_CAR targets a car.
+  
+    Returns:
+    void
+    """
+    chassis_ctrl.set_trans_speed(speed)
+    target = None
+    hits = None
 
-print("Waiting for a person to be visible...")
+    if target_type == TARGET_PERSON:
+        target = rm_define.vision_detection_people
+    else:
+        target = rm_define.vision_detection_car
+    
+    # Enable target detection
+    vision_ctrl.enable_detection(target)
 
-# Wait for a person to become visible on screen.
-vision_ctrl.cond_wait(rm_define.cond_recognized_people)
+    print("Waiting for the target to be visible...")
 
-print("Recognized a person...")
+    # Wait for a person to become visible on screen.
 
-# Get the people detection information.
-hits = vision_ctrl.get_people_detection_info()
-# Number of people detected
-people_hit = hits[0]
-# Height of the bounding box for the first person detected.
-bounding_box_height = hits[4]
-# Height of the bounding box in mm.
-height_in_mm = pixels_to_mm(bounding_box_height)
-# Distance from the Robomaster to the person in m.
-distance_in_m = distance_in_mm(height_in_mm) / 1000
+    if target_type == TARGET_PERSON:
+        vision_ctrl.cond_wait(rm_define.cond_recognized_people)
+    else:
+        vision_ctrl.cond_wait(rm_define.cond_recognized_car)
 
-print("Hits: " + str(hits))
-print("Number of people found: " + str(people_hit))
-print("Height of the bounding box: " + str(height_in_mm) + " mm")
-print("Distance to person: " + str(distance_in_m) + " m")
+    print("Recognized a target...")
 
-print("Driving to person...")
-# Drive to the person based on the estimated distance to that person.
-chassis_ctrl.move_with_distance(0, distance_in_m)
+    # Get the people detection information.
+    if target_type == TARGET_PERSON:
+        hits = vision_ctrl.get_people_detection_info()
+    else:
+        hits = vision_ctrl.get_car_detection_info()
+
+    # Number of people detected
+    targets_hit = hits[0]
+    
+    # Height of the bounding box for the closest target.
+    bounding_box_height = get_closest_target_height(hits)
+
+    # Height of the bounding box in mm.
+    height_in_mm = pixels_to_mm(bounding_box_height)
+    # Distance from the Robomaster to the target in m.
+    distance_in_m = distance_in_mm(height_in_mm) / 1000
+
+    print("Hits: " + str(hits))
+    print("Number of targets found: " + str(targets_hit))
+    print("Height of the bounding box: " + str(height_in_mm) + " mm")
+    print("Distance to target: " + str(distance_in_m) + " m")
+
+    print("Driving to target...")
+    # Drive to the person based on the estimated distance to that person.
+    chassis_ctrl.move_with_distance(0, distance_in_m)
+
+def get_closest_target_height(hits):
+    """
+    Finds the bounding box height for the closest target in a list of targets.
+  
+    Parameters:
+    hits (List): A list of detected targets from vision_ctrl.
+  
+    Returns:
+    int: Pixel length for the closest target.
+    """
+    targets_hit = hits[0]
+    closest = math.inf
+
+    for i in range(4, len(hits), 4):
+        if hits[i] < closest:
+            closest = hits[i]
+    
+    return closest
+
+def start():
+    """
+    The entry-point method for the program.
+
+    Moves to the closest target.
+    """
+    move_to_closest_target()
