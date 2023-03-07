@@ -2,6 +2,17 @@
 # detection distance from 0.5 to 3 for farther distances.
 
 def detect_and_fire():
+    """
+    Fire laser beams once a human is detected. The person must be within an unobstructed 
+    view from the device in order to be recognized. 
+    Prints to the console data logged during execution such as the number of people detected, 
+    number of shots fired, X- and Y-coordinates of the central point, width, and height.
+    
+    Parameters: none
+    
+    Returns: 
+    void
+    """
 
     led1=0
     led2=255
@@ -35,16 +46,6 @@ def detect_and_fire():
             led_ctrl.set_flash(rm_define.armor_all,blink_rate[0])
             led_ctrl.set_top_led(rm_define.armor_top_all,led2,led1,led1,rm_define.effect_marquee)
             led_ctrl.set_bottom_led(rm_define.armor_bottom_all,led2,led1,led1,rm_define.effect_flash)
-
-            # MODIFY - get the dimensions of the bounding box around the detected person using the S1 API
-            # if orientation == "right":
-            #     gimbal_ctrl.rotate_with_degree(rm_define.gimbal_right, 10)
-            # elif orientation == "left":
-            #     gimbal_ctrl.rotate_with_degree(rm_define.gimbal_left, 10)
-            # elif orientation == "up":
-            #     gimbal_ctrl.rotate_with_degree(rm_define.gimbal_up, 10)
-            # elif orientation == "down":
-            #     gimbal_ctrl.rotate_with_degree(rm_define.gimbal_down, 10)
 
             gimbal_ctrl.rotate_with_degree(rm_define.gimbal_up,randup)
 
