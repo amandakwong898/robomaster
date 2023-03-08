@@ -596,7 +596,7 @@ signature-mutators=
 
 # List of additional names supposed to be defined in builtins. Remember that
 # you should avoid defining new builtins when possible.
-additional-builtins=armor_ctrl, chassis_ctrl, gimbal_ctrl, gun_ctrl, led_ctrl, media_ctrl, mobile_ctrl, random, rm_define, time, tools, vision_ctrl
+additional-builtins=armor_ctrl, chassis_ctrl, gimbal_ctrl, gun_ctrl, led_ctrl, media_ctrl, mobile_ctrl, random, rm_define, robot_ctrl, time, tools, vision_ctrl
 
 # Tells whether unused global variables should be treated as a violation.
 allow-global-unused-variables=yes
