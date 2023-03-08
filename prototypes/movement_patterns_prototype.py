@@ -1,8 +1,19 @@
+"""
+movement_patterns_prototype.py:
+
+A collection of functions that move the RoboMaster in one of four different patterns:
+
+Circle pattern: Moves the RoboMaster in a circle.
+X-shaped pattern: Moves the RoboMaster in an X-shaped pattern.
+Cross-shaped pattern: Moves the RoboMaster in an cross-shaped pattern.
+Square pattern: Moves the RoboMaster in a square-shaped pattern.
+"""
+
 import math
 
 def move_in_circle_pattern(velocity, radius, seconds):
     """
-    Moves the Robomaster in a circle pattern.
+    Moves the RoboMaster in a circle pattern.
   
     Parameters:
     velocity (int): The velocity of the Robomaster's wheels in RPM.
@@ -82,7 +93,7 @@ def start():
 
     Moves the Robomaster in a movement pattern.
     """
-    move_in_circle(130, 1, 15)
+    move_in_circle_pattern(130, 1, 15)
     #move_in_x_pattern(2)
     #move_in_cross_pattern(1)
     #move_in_square_pattern(100, 2)

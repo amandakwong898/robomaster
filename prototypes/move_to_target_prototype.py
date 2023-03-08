@@ -1,3 +1,14 @@
+"""
+move_to_target_prototype.py:
+
+A collection of function that estimates the distance between the RoboMaster and a target using
+the camera's focal length and DPI. This file also contains a function for determining the
+closest target among a list of targets. 
+
+The client program waits for a target to become visible before moving the RoboMaster to the
+closest target.
+"""
+
 import math
 
 # Height of the Robomaster in mm.
@@ -58,7 +69,7 @@ def move_to_closest_target(target_type=TARGET_PERSON, speed=1.5):
         target = rm_define.vision_detection_people
     else:
         target = rm_define.vision_detection_car
-    
+
     # Enable target detection
     vision_ctrl.enable_detection(target)
 
@@ -81,7 +92,7 @@ def move_to_closest_target(target_type=TARGET_PERSON, speed=1.5):
 
     # Number of people detected
     targets_hit = hits[0]
-    
+
     # Height of the bounding box for the closest target.
     bounding_box_height = get_closest_target_height(hits)
 
@@ -109,13 +120,12 @@ def get_closest_target_height(hits):
     Returns:
     int: Pixel length for the closest target.
     """
-    targets_hit = hits[0]
     closest = math.inf
 
     for i in range(4, len(hits), 4):
         if hits[i] < closest:
             closest = hits[i]
-    
+
     return closest
 
 def start():
