@@ -1,3 +1,12 @@
+"""
+move_and_shoot_prototype:
+
+Combines move_to_target_prototype.py and detect_and_fire_prototype.py.
+
+The client program waits for a target to become visible before moving the RoboMaster to the
+closest target.
+"""
+
 import math
 
 # Height of the Robomaster in mm.
@@ -58,7 +67,7 @@ def move_to_closest_target(target_type=TARGET_PERSON, speed=1.5):
         target = rm_define.vision_detection_people
     else:
         target = rm_define.vision_detection_car
-    
+
     # Enable target detection
     vision_ctrl.enable_detection(target)
 
@@ -81,7 +90,7 @@ def move_to_closest_target(target_type=TARGET_PERSON, speed=1.5):
 
     # Number of people detected
     targets_hit = hits[0]
-    
+
     # Height of the bounding box for the closest target.
     bounding_box_height = get_closest_target_height(hits)
 
@@ -110,20 +119,29 @@ def get_closest_target_height(hits):
     Returns:
     int: Pixel length for the closest target.
     """
-    targets_hit = hits[0]
     closest = math.inf
 
     for i in range(4, len(hits), 4):
         if hits[i] < closest:
             closest = hits[i]
-    
+
     return closest
 
 def detect_and_fire():
-
+    """
+    Fire laser beams once a human is detected. The person must be within an unobstructed 
+    view from the device in order to be recognized. 
+    Prints to the console data logged during execution such as the number of people detected, 
+    and number of shots fired.
+    
+    Parameters: none
+    
+    Returns: 
+    void
+    """
     led1,led2=0,255
     blink_rate=6,8
-      
+
     num_people_detected=0
     num_blaster_shots=0
 
@@ -134,7 +152,7 @@ def detect_and_fire():
     randup=random.randint(1,55)
 
     gimbal_ctrl.set_rotate_speed(randgimbal_speed)
-    
+
     media_ctrl.play_sound(rm_define.media_sound_gimbal_rotate,wait_for_complete_flag=False)
 
     led_ctrl.set_flash(rm_define.armor_all,blink_rate[0])
@@ -149,10 +167,10 @@ def detect_and_fire():
 
     media_ctrl.play_sound(rm_define.media_sound_shoot,wait_for_complete_flag=True)
     media_ctrl.play_sound(rm_define.media_sound_shoot,wait_for_complete_flag=True)
-    
+
     # Increment the number of blaster shots fired
     num_blaster_shots += 1
-    
+
     # Print out the number of people detected and blaster shots fired
     print(f"Number of people detected: {num_people_detected}")
     print(f"Number of blaster shots fired: {num_blaster_shots}")
