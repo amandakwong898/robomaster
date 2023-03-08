@@ -7,6 +7,8 @@ Circle pattern: Moves the RoboMaster in a circle.
 X-shaped pattern: Moves the RoboMaster in an X-shaped pattern.
 Cross-shaped pattern: Moves the RoboMaster in an cross-shaped pattern.
 Square pattern: Moves the RoboMaster in a square-shaped pattern.
+
+The client program moves the RoboMaster in one of the four movement patterns and then exits.
 """
 
 import math
