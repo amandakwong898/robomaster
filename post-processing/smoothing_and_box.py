@@ -3,6 +3,14 @@ import numpy as np
 import cv2
 import matplotlib.pyplot as plt
  
+"""
+This program post-processes an MP4 file an applies a Gaussian blur
+to the video to remove detail and noise. It also uses Otsu's thresholding 
+method to create a binary image, and finds the largest contour in the 
+binary image to draw the bounding box.
+"""
+ 
+ 
 # Creating a VideoCapture object to read the video
 cap = cv2.VideoCapture('DJI_0001.MP4')
 
@@ -27,7 +35,7 @@ while (cap.isOpened()):
     ret, frame = cap.read()
     frame = cv2.resize(frame, (540, 380), fx = 0, fy = 0,
                          interpolation = cv2.INTER_CUBIC)             
- 
+
     # Convert the frame to grayscale
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
