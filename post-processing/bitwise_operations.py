@@ -2,6 +2,11 @@
 import cv2
 import numpy as np
 
+"""
+Referenced https://www.geeksforgeeks.org/python-process-images-of-a-video-using-opencv/.
+Will add more features soon.
+"""
+
 # Creating a VideoCapture object to read the video
 cap = cv2.VideoCapture('DJI_0001.MP4')
 
