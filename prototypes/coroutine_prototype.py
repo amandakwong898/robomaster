@@ -24,7 +24,9 @@ class RoboMasterState:
     CHASE: Chases another RoboMaster.
     ATTACK: Attacks another RoboMaster.
     FLEE: Runs away from another RoboMaster.
-    IDLE: Waits an does nothing.
+    IDLE: Waits and does nothing.
+    TAGGED: Once detected by another RoboMaster, transitions to CHASE state.
+
     CURRENT_STATE: The RoboMaster's current state. The default is IDLE.
 
     """
@@ -33,6 +35,7 @@ class RoboMasterState:
     ATTACK = "ATTACK"
     FLEE = "FLEE"
     IDLE = "IDLE"
+    TAGGED = "TAGGED"
 
     CURRENT_STATE = IDLE
 
@@ -42,6 +45,7 @@ def get_coroutine():
 
     When the current state is RoboMasterState.IDLE, it returns the idle coroutine.
     When the current state is RoboMasterState.PATROL, it returns the patrol coroutine.
+    When the current state is RoboMasterState.CHASE, it returns the chase coroutine.
   
     Parameters:
     none
@@ -51,8 +55,43 @@ def get_coroutine():
     """
     if RoboMasterState.CURRENT_STATE == RoboMasterState.PATROL:
         return patrol()
+    elif RoboMasterState.CURRENT_STATE == RoboMasterState.CHASE:
+        return chase()
 
     return idle()
+
+def patrol():
+    """
+    Patrols while the current state is RoboMasterState.PATROL.
+
+    Parameters:
+    none
+  
+    Returns:
+    void
+    """
+    while RoboMasterState.CURRENT_STATE == RoboMasterState.PATROL:
+        print(RoboMasterState.PATROL)
+        # implement tagged() to determine if RoboMaster is tagged
+        if tagged():
+            RoboMasterState.CURRENT_STATE = RoboMasterState.CHASE
+        yield
+    print("Finished Patrol")
+
+def chase():
+    """
+    Chases another RoboMaster while the current state is RoboMasterState.CHASE.
+
+    Parameters:
+    none
+    
+    Returns:
+    void
+    """
+    while RoboMasterState.CURRENT_STATE == RoboMasterState.CHASE:
+        print(RoboMasterState.CHASE)
+        yield
+    print("Finished Chase")
 
 def idle():
     """
@@ -69,20 +108,16 @@ def idle():
         yield
     print("Finished Idle")
 
-def patrol():
+def tagged():
     """
-    Patrols while the current state is RoboMasterState.PATROL.
+    Determines if RoboMaster is tagged (still ip - physical attack? within range? etc.)
 
     Parameters:
     none
-  
+
     Returns:
-    void
+    void   
     """
-    while RoboMasterState.CURRENT_STATE == RoboMasterState.PATROL:
-        print(RoboMasterState.PATROL)
-        yield
-    print("Finished Patrol")
 
 def get_random_state():
     """
@@ -96,7 +131,9 @@ def get_random_state():
     """
     rand_int = random.randint(1, 10)
 
-    if rand_int <= 5:
+    if rand_int == 1:
+        return RoboMasterState.TAGGED
+    elif rand_int <= 5:
         return RoboMasterState.IDLE
 
     return RoboMasterState.PATROL
