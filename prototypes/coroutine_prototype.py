@@ -103,8 +103,8 @@ def idle():
     Returns:
     void
     """
+    print(RoboMasterState.IDLE)
     while RoboMasterState.CURRENT_STATE == RoboMasterState.IDLE:
-        print(RoboMasterState.IDLE)
         yield
     print("Finished Idle")
 
@@ -118,6 +118,13 @@ def tagged():
     Returns:
     void   
     """
+<<<<<<< Updated upstream
+=======
+    print(RoboMasterState.PATROL)
+    while RoboMasterState.CURRENT_STATE == RoboMasterState.PATROL:
+        yield
+    print("Finished Patrol")
+>>>>>>> Stashed changes
 
 def get_random_state():
     """
@@ -138,6 +145,9 @@ def get_random_state():
 
     return RoboMasterState.PATROL
 
+def armor_hit_detection_all(msg):
+    RoboMasterState.CURRENT_STATE = get_random_state()
+
 def start():
     """
     The entry-point method for the program.
@@ -145,11 +155,11 @@ def start():
     coroutine for that state.
     """
     current_coroutine = idle()
+    armor_ctrl.set_hit_sensitivity(10)
 
     for _ in range(10):
         try:
             current_coroutine.__next__()
-            RoboMasterState.CURRENT_STATE = get_random_state()
             # pylint: disable=broad-exception-caught
             # A StopIteration exception is always raised when exiting
             # a coroutine but the RoboMaster does not recognize it.
@@ -157,5 +167,3 @@ def start():
             # general exception.
         except Exception:
             current_coroutine = get_coroutine()
-
-start()
