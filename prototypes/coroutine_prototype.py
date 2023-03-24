@@ -8,8 +8,125 @@ a few of the possible states.
 The client program randomly changes the Robomaster's state before
 running the corresponding coroutine for that state.
 """
+import math
 
-import random
+class RoboMasterDimensions:
+    """
+    A collection of function that estimates the distance between the RoboMaster
+    and a target using the camera's focal length and DPI.
+    """
+
+    # Height of the Robomaster in mm.
+    ROBOMASTER_HEIGHT_MM = 270.0
+    # Height of the Robomaster in in.
+    ROBOMASTER_HEIGHT_IN = 10.6
+    # Camera focal length for the Robomaster.
+    ROBOMASTER_CAMERA_FOCAL_LENGTH = 1.0
+    # Camera DPI for the Robomaster.
+    ROBOMASTER_CAMERA_DPI = 72.0
+
+    @staticmethod
+    def distance_in_mm(height):
+        """
+        Returns distance to an object in mm.
+  
+        Parameters:
+        height (int): Height of the object's bounding box in mm.
+  
+        Returns:
+        float: Distance to an object in mm.
+        """
+        return (RoboMasterDimensions.ROBOMASTER_CAMERA_FOCAL_LENGTH *
+                RoboMasterDimensions.ROBOMASTER_HEIGHT_MM) / height
+
+    @staticmethod
+    def pixels_to_mm(pixels):
+        """
+        Converts pixels to mm based on the DPI for the Robomaster's camera.
+  
+        Parameters:
+        pixels (int): Pixel length from the Robomaster's camera.
+  
+        Returns:
+        float: Pixel length from the Robomaster's camera in mm.
+        """
+        return (pixels * 25.4) / RoboMasterDimensions.ROBOMASTER_CAMERA_DPI
+
+    @staticmethod
+    def get_closest_target_height(hits):
+        """
+        Finds the bounding box height for the closest target in a list of targets.
+  
+        Parameters:
+        hits (List): A list of detected targets from vision_ctrl.
+  
+        Returns:
+        int: Pixel length for the closest target.
+        """
+        closest = math.inf
+
+        for i in range(4, len(hits), 4):
+            if hits[i] < closest:
+                closest = hits[i]
+
+        return closest
+
+class RoboMasterMovements:
+    """
+    A collection of functions that move the RoboMaster in one of two different ways:
+    Cross-shaped movement pattern: Moves the RoboMaster in an cross-shaped pattern.
+    Target following: Moves the RoboMaster to a detected target.
+    """
+    @staticmethod
+    def move_in_cross_pattern(distance):
+        """
+        Moves the Robomaster in an cross-shaped pattern.
+  
+        Parameters:
+        distance (int): The vertical and horizontal distance in to travel in m.
+        Has a range of [0, 5] m.
+  
+        Returns:
+        void
+        """
+        chassis_ctrl.set_trans_speed(1.5)
+
+        while True:
+            chassis_ctrl.move_with_distance(0, distance)
+            yield
+            chassis_ctrl.move_with_distance(180, distance / 2)
+            yield
+            chassis_ctrl.move_with_distance(-90, distance / 2)
+            yield
+            chassis_ctrl.move_with_distance(90, distance)
+            yield
+
+    @staticmethod
+    def move_to_target():
+        """
+        Moves to the closest target.
+  
+        Parameters:
+        none
+  
+        Returns:
+        void
+        """
+        hits = vision_ctrl.get_people_detection_info()
+        targets_hit = hits[0]
+
+        if targets_hit > 0:
+            # Height of the bounding box for the closest target.
+            bounding_box_height = RoboMasterDimensions().get_closest_target_height(hits)
+
+            # Height of the bounding box in mm.
+            height_in_mm = RoboMasterDimensions.pixels_to_mm(bounding_box_height)
+
+            # Distance from the Robomaster to the target in m.
+            distance_in_m = RoboMasterDimensions.distance_in_mm(height_in_mm) / 1000
+
+            # Move to the target.
+            chassis_ctrl.move_with_distance(0, distance_in_m)
 
 # pylint: disable=too-few-public-methods
 # This warning is diabled because the only purpose
@@ -37,7 +154,7 @@ class RoboMasterState:
     IDLE = "IDLE"
     TAGGED = "TAGGED"
 
-    CURRENT_STATE = IDLE
+    CURRENT_STATE = PATROL
 
 def get_coroutine():
     """
@@ -55,8 +172,18 @@ def get_coroutine():
     """
     if RoboMasterState.CURRENT_STATE == RoboMasterState.PATROL:
         return patrol()
-    elif RoboMasterState.CURRENT_STATE == RoboMasterState.CHASE:
+
+    if RoboMasterState.CURRENT_STATE == RoboMasterState.CHASE:
         return chase()
+
+    if RoboMasterState.CURRENT_STATE == RoboMasterState.ATTACK:
+        return idle()
+
+    if RoboMasterState.CURRENT_STATE == RoboMasterState.FLEE:
+        return idle()
+
+    if RoboMasterState.CURRENT_STATE == RoboMasterState.TAGGED:
+        return idle()
 
     return idle()
 
@@ -70,12 +197,15 @@ def patrol():
     Returns:
     void
     """
+    current_movement_pattern = RoboMasterMovements.move_in_cross_pattern(1)
+
+    print(RoboMasterState.CURRENT_STATE)
     while RoboMasterState.CURRENT_STATE == RoboMasterState.PATROL:
-        print(RoboMasterState.PATROL)
-        # implement tagged() to determine if RoboMaster is tagged
-        if tagged():
+        if vision_ctrl.check_condition(rm_define.cond_recognized_people):
             RoboMasterState.CURRENT_STATE = RoboMasterState.CHASE
-        yield
+            yield
+        current_movement_pattern.__next__()
+
     print("Finished Patrol")
 
 def chase():
@@ -88,9 +218,13 @@ def chase():
     Returns:
     void
     """
+    print(RoboMasterState.CURRENT_STATE)
     while RoboMasterState.CURRENT_STATE == RoboMasterState.CHASE:
-        print(RoboMasterState.CHASE)
-        yield
+        if not vision_ctrl.check_condition(rm_define.cond_recognized_people):
+            RoboMasterState.CURRENT_STATE = RoboMasterState.IDLE
+            yield
+        RoboMasterMovements.move_to_target()
+
     print("Finished Chase")
 
 def idle():
@@ -103,8 +237,8 @@ def idle():
     Returns:
     void
     """
+    print(RoboMasterState.IDLE)
     while RoboMasterState.CURRENT_STATE == RoboMasterState.IDLE:
-        print(RoboMasterState.IDLE)
         yield
     print("Finished Idle")
 
@@ -119,24 +253,7 @@ def tagged():
     void   
     """
 
-def get_random_state():
-    """
-    Returns a random RoboMasterState.
-
-    Parameters:
-    none
-  
-    Returns:
-    void
-    """
-    rand_int = random.randint(1, 10)
-
-    if rand_int == 1:
-        return RoboMasterState.TAGGED
-    elif rand_int <= 5:
-        return RoboMasterState.IDLE
-
-    return RoboMasterState.PATROL
+    return False
 
 def start():
     """
@@ -144,12 +261,12 @@ def start():
     Randomly changes the Robomaster's state before running the corresponding
     coroutine for that state.
     """
-    current_coroutine = idle()
+    vision_ctrl.enable_detection(rm_define.vision_detection_people)
+    current_coroutine = get_coroutine()
 
-    for _ in range(10):
+    while RoboMasterState.CURRENT_STATE != RoboMasterState.IDLE:
         try:
             current_coroutine.__next__()
-            RoboMasterState.CURRENT_STATE = get_random_state()
             # pylint: disable=broad-exception-caught
             # A StopIteration exception is always raised when exiting
             # a coroutine but the RoboMaster does not recognize it.
@@ -157,5 +274,3 @@ def start():
             # general exception.
         except Exception:
             current_coroutine = get_coroutine()
-
-start()

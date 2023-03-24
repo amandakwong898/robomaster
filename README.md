@@ -28,3 +28,5 @@ Tagging feature: The RoboMaster should be able to "tag" other RoboMasters by fir
 **Project Directory**:
 
 /prototypes/: This directory contains the prototypes for this project. See the [Project Wiki](https://github.com/amandakwong898/robomaster/wiki/Prototypes) for more information.
+
+/post-processing/: This directory contains files for post-processing recorded video footage from the RoboMaster S1.
