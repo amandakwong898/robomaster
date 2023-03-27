@@ -25,7 +25,6 @@ class RoboMasterDimensions:
     # Camera DPI for the Robomaster.
     ROBOMASTER_CAMERA_DPI = 72.0
 
-    @staticmethod
     def distance_in_mm(height):
         """
         Returns distance to an object in mm.
@@ -39,7 +38,6 @@ class RoboMasterDimensions:
         return (RoboMasterDimensions.ROBOMASTER_CAMERA_FOCAL_LENGTH *
                 RoboMasterDimensions.ROBOMASTER_HEIGHT_MM) / height
 
-    @staticmethod
     def pixels_to_mm(pixels):
         """
         Converts pixels to mm based on the DPI for the Robomaster's camera.
@@ -52,7 +50,6 @@ class RoboMasterDimensions:
         """
         return (pixels * 25.4) / RoboMasterDimensions.ROBOMASTER_CAMERA_DPI
 
-    @staticmethod
     def get_closest_target_height(hits):
         """
         Finds the bounding box height for the closest target in a list of targets.
@@ -77,7 +74,6 @@ class RoboMasterMovements:
     Cross-shaped movement pattern: Moves the RoboMaster in an cross-shaped pattern.
     Target following: Moves the RoboMaster to a detected target.
     """
-    @staticmethod
     def move_in_cross_pattern(distance):
         """
         Moves the Robomaster in an cross-shaped pattern.
@@ -101,7 +97,6 @@ class RoboMasterMovements:
             chassis_ctrl.move_with_distance(90, distance)
             yield
 
-    @staticmethod
     def move_to_target():
         """
         Moves to the closest target.
