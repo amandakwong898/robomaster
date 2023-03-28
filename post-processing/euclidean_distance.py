@@ -1,7 +1,7 @@
 import math
 
 """
-Taken from: https://www.analyticsvidhya.com/blog/2022/05/a-tutorial-on-centroid-tracker-counter-system/
+Taken from: https://github.com/Abhishekjl/OPENCV-
 Compute Euclidean distance between new bounding boxes and existing objects.
 """
 
