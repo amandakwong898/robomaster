@@ -8,6 +8,11 @@ a few of the possible states.
 The client program randomly changes the Robomaster's state before
 running the corresponding coroutine for that state.
 """
+# These checks must be disabled due to the restrictions of the RoboMaster app.
+# pylint: disable=unnecessary-dunder-call, unsubscriptable-object, no-self-argument
+# All class methods are static but are not denoted as such since the RoboMaster app
+# does not support function decorators.
+
 import math
 
 class RoboMasterDimensions:
@@ -67,8 +72,18 @@ class RoboMasterDimensions:
                 closest = hits[i]
 
         return closest
-    
-    def distance_to_robomaster(hits):
+
+    def distance_to_robomaster_in_m(hits):
+        """
+        Returns the distance from the closest detected object to the RoboMaster in m.
+  
+        Parameters:
+        distance (int): The vertical and horizontal distance in to travel in m.
+        Has a range of [0, 5] m.
+  
+        Returns:
+        void
+        """
         # Height of the bounding box for the closest target.
         bounding_box_height = RoboMasterDimensions.get_closest_target_height(hits)
 
@@ -86,8 +101,11 @@ class RoboMasterMovements:
     Target following: Moves the RoboMaster to a detected target.
     """
 
+    # An inch in meters.
     INCH_IN_M = 0.0254
+    # A foot in meters.
     FOOT_IN_M = 0.3048
+    # A yard in meters.
     YARD_IN_M = 0.9144
 
     def move_in_cross_pattern(distance):
@@ -113,22 +131,22 @@ class RoboMasterMovements:
             chassis_ctrl.move_with_distance(90, distance)
             yield
 
-    def move_to_target():
+    def move_to_target(hits):
         """
         Moves to the closest target.
   
         Parameters:
-        none
+        hits (List): A list of detected objects.
   
         Returns:
         void
         """
-        hits = vision_ctrl.get_people_detection_info()
+
         targets_hit = hits[0]
 
         if targets_hit > 0:
             # Height of the bounding box for the closest target.
-            bounding_box_height = RoboMasterDimensions().get_closest_target_height(hits)
+            bounding_box_height = RoboMasterDimensions.get_closest_target_height(hits)
 
             # Height of the bounding box in mm.
             height_in_mm = RoboMasterDimensions.pixels_to_mm(bounding_box_height)
@@ -254,18 +272,37 @@ def idle():
     print("Finished Idle")
 
 def attack():
+    """
+    Attacks while the current state is RoboMasterState.ATTACK.
+
+    Parameters:
+    none
+  
+    Returns:
+    void
+    """
     print(RoboMasterState.ATTACK)
     while RoboMasterState.CURRENT_STATE == RoboMasterState.ATTACK:
         yield
     print("Finished Attack")
 
 def flee():
+    """
+    Flees while the current state is RoboMasterState.FLEE.
+
+    Parameters:
+    none
+  
+    Returns:
+    void
+    """
     print(RoboMasterState.FLEE)
+    current_movement_pattern = RoboMasterMovements.move_in_cross_pattern(1)
     while RoboMasterState.CURRENT_STATE == RoboMasterState.FLEE:
         if vision_ctrl.check_condition(rm_define.cond_recognized_people):
             chassis_ctrl.move_with_distance(180, 2)
         else:
-            RoboMasterMovements.move_in_cross_pattern()
+            current_movement_pattern.__next__()
     print("Finished Flee")
     chassis_ctrl.stop()
 
