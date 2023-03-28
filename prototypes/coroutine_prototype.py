@@ -25,7 +25,6 @@ class RoboMasterDimensions:
     # Camera DPI for the Robomaster.
     ROBOMASTER_CAMERA_DPI = 72.0
 
-    @staticmethod
     def distance_in_mm(height):
         """
         Returns distance to an object in mm.
@@ -39,7 +38,6 @@ class RoboMasterDimensions:
         return (RoboMasterDimensions.ROBOMASTER_CAMERA_FOCAL_LENGTH *
                 RoboMasterDimensions.ROBOMASTER_HEIGHT_MM) / height
 
-    @staticmethod
     def pixels_to_mm(pixels):
         """
         Converts pixels to mm based on the DPI for the Robomaster's camera.
@@ -52,7 +50,6 @@ class RoboMasterDimensions:
         """
         return (pixels * 25.4) / RoboMasterDimensions.ROBOMASTER_CAMERA_DPI
 
-    @staticmethod
     def get_closest_target_height(hits):
         """
         Finds the bounding box height for the closest target in a list of targets.
@@ -70,6 +67,17 @@ class RoboMasterDimensions:
                 closest = hits[i]
 
         return closest
+    
+    def distance_to_robomaster(hits):
+        # Height of the bounding box for the closest target.
+        bounding_box_height = RoboMasterDimensions.get_closest_target_height(hits)
+
+        # Height of the bounding box in mm.
+        height_in_mm = RoboMasterDimensions.pixels_to_mm(bounding_box_height)
+        # Distance from the Robomaster to the target in m.
+        distance_in_m = RoboMasterDimensions.distance_in_mm(height_in_mm) / 1000
+
+        return distance_in_m
 
 class RoboMasterMovements:
     """
@@ -77,7 +85,11 @@ class RoboMasterMovements:
     Cross-shaped movement pattern: Moves the RoboMaster in an cross-shaped pattern.
     Target following: Moves the RoboMaster to a detected target.
     """
-    @staticmethod
+
+    INCH_IN_M = 0.0254
+    FOOT_IN_M = 0.3048
+    YARD_IN_M = 0.9144
+
     def move_in_cross_pattern(distance):
         """
         Moves the Robomaster in an cross-shaped pattern.
@@ -101,7 +113,6 @@ class RoboMasterMovements:
             chassis_ctrl.move_with_distance(90, distance)
             yield
 
-    @staticmethod
     def move_to_target():
         """
         Moves to the closest target.
@@ -154,7 +165,7 @@ class RoboMasterState:
     IDLE = "IDLE"
     TAGGED = "TAGGED"
 
-    CURRENT_STATE = PATROL
+    CURRENT_STATE = CHASE
 
 def get_coroutine():
     """
@@ -177,10 +188,10 @@ def get_coroutine():
         return chase()
 
     if RoboMasterState.CURRENT_STATE == RoboMasterState.ATTACK:
-        return idle()
+        return attack()
 
     if RoboMasterState.CURRENT_STATE == RoboMasterState.FLEE:
-        return idle()
+        return flee()
 
     if RoboMasterState.CURRENT_STATE == RoboMasterState.TAGGED:
         return idle()
@@ -221,10 +232,10 @@ def chase():
     print(RoboMasterState.CURRENT_STATE)
     while RoboMasterState.CURRENT_STATE == RoboMasterState.CHASE:
         if not vision_ctrl.check_condition(rm_define.cond_recognized_people):
-            RoboMasterState.CURRENT_STATE = RoboMasterState.IDLE
+            chassis_ctrl.stop()
+            RoboMasterState.CURRENT_STATE = RoboMasterState.PATROL
             yield
-        RoboMasterMovements.move_to_target()
-
+        chassis_ctrl.set_wheel_speed(100,100,100,100)
     print("Finished Chase")
 
 def idle():
@@ -241,6 +252,22 @@ def idle():
     while RoboMasterState.CURRENT_STATE == RoboMasterState.IDLE:
         yield
     print("Finished Idle")
+
+def attack():
+    print(RoboMasterState.ATTACK)
+    while RoboMasterState.CURRENT_STATE == RoboMasterState.ATTACK:
+        yield
+    print("Finished Attack")
+
+def flee():
+    print(RoboMasterState.FLEE)
+    while RoboMasterState.CURRENT_STATE == RoboMasterState.FLEE:
+        if vision_ctrl.check_condition(rm_define.cond_recognized_people):
+            chassis_ctrl.move_with_distance(180, 2)
+        else:
+            RoboMasterMovements.move_in_cross_pattern()
+    print("Finished Flee")
+    chassis_ctrl.stop()
 
 def tagged():
     """
