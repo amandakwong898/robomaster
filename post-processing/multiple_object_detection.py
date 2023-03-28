@@ -2,6 +2,11 @@ from tracker import EuclideanDistTracker
 import cv2
 import numpy as np
 
+"""
+This program implements centroid-based object tracking
+and creates bounding boxes on distinct objects within
+its view. A unique ID is assigned to each object being tracked.
+"""
 
 cap  = cv2.VideoCapture('DJI_0001.MP4') # REPLACE WITH PATH TO MP4
 ret, frame1 = cap.read()
@@ -24,15 +29,17 @@ while cap.isOpened():
     contours, _, = cv2.findContours(dilated, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     
     detections = []
-    # DRAWING RECTANGLE BOXED
+
     for contour in contours:
         (x,y,w,h) = cv2.boundingRect(contour)
         if cv2.contourArea(contour) <300:
             continue
         detections.append([x,y,w,h])
     
-    # object tracking 
+    # return a list of bounding boxes with their corresponding IDs
     boxes_ids = tracker.update(detections)
+    
+    #  loop through this list and draw the bounding boxes and IDs on the frame
     for box_id in boxes_ids:
         x,y,w,h,id = box_id
         cv2.putText(frame1, str(id),(x,y-15), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
