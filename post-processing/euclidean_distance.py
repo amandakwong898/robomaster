@@ -1,9 +1,11 @@
-import math
-
 """
+euclidean_distance.py:
+
 Taken from: https://github.com/Abhishekjl/OPENCV-
 Compute Euclidean distance between new bounding boxes and existing objects.
 """
+
+import math
 
 class EuclideanDistTracker:
     def __init__(self):
@@ -12,7 +14,6 @@ class EuclideanDistTracker:
         # Keep the count of the IDs
         # each time a new object id detected, the count will increase by one
         self.id_count = 0
-
 
     def update(self, objects_rect):
         # Objects boxes and ids
