@@ -36,7 +36,7 @@ while cap.isOpened():
 
     for contour in contours:
         (x, y, w, h) = cv2.boundingRect(contour)
-        if cv2.contourArea(contour) < 300:
+        if cv2.contourArea(contour) < 10000:
             continue
         detections.append([x, y, w, h])
 
