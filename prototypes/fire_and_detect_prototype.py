@@ -7,6 +7,7 @@ two claps. The Robomaster S1 fires four times if it detects another
 robot; else, it will emit a C-sharp sound.
 """
 
+#pylint: disable=unused-argument
 def sound_recognized_applause_twice(msg):
     """
     When RoboMaster detects another RoboMaster, it will fire 4 times.
@@ -33,7 +34,7 @@ def sound_recognized_applause_twice(msg):
     else:
         media_ctrl.play_sound(rm_define.media_sound_solmization_3C)
     time.sleep(8)
-    
+
 def start():
     """
     The entry-point method for the program.
