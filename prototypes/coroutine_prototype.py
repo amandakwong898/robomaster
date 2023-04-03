@@ -300,7 +300,9 @@ def flee():
     current_movement_pattern = RoboMasterMovements.move_in_cross_pattern(1)
     while RoboMasterState.CURRENT_STATE == RoboMasterState.FLEE:
         if vision_ctrl.check_condition(rm_define.cond_recognized_people):
-            chassis_ctrl.move_with_distance(180, 2)
+            chassis_ctrl.rotate(rm_define.clockwise)
+            time.sleep(3)
+            chassis_ctrl.rotate(rm_define.clockwise)
         else:
             current_movement_pattern.__next__()
     print("Finished Flee")
