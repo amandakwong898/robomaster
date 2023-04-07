@@ -206,3 +206,25 @@ obj, _ = parse(tokens, is_root=True)
 
 # Print the Python object
 print(obj)
+
+# Print out each key-value pair in the obj['instructions'] list
+for instruction in obj['instructions']:
+    for key, value in instruction.items():
+        # print(key, value)
+        if value == 'move':
+            direction = instruction['direction']
+            distance = instruction['distance'] 
+            if direction == 'forward': 
+                chassis_ctrl.move_with_distance(0, distance)
+            elif direction == 'right': 
+                chassis_ctrl.move_with_distance(90, distance)
+            elif direction == 'backward': 
+                chassis_ctrl.move_with_distance(180, distance)
+            else:
+                chassis_ctrl.move_with_distance(-90, distance)
+            print(f'Move params: {direction, distance}')   
+        elif value == 'turn':
+            direction = instruction['direction']
+            angle = instruction['angle']  
+            chassis_ctrl.rotate_with_degree(direction, angle)
+            print(f'Turn params: {direction, angle}')    
