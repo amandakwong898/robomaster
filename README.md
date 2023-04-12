@@ -19,14 +19,18 @@ library to analyze and visualize data.
 1. Movement patterns: The RoboMaster should be able to move in specific patterns, resembling the way that a security guard patrols a shopping mall.
 2. Object distance detection: The RoboMaster should be able to detect how far away an object is by using the focal length and DPI of its camera.
 3. Clap detection: The RoboMaster should be able to respond to a clap, which will start or stop the game.
-4. Collision avoidance: The RoboMaster should be able to avoid collisions with other objects by applying a "braking system" that deploys when it is close to colliding with another object.
-Tagging feature: The RoboMaster should be able to "tag" other RoboMasters by firing a laser onto another RoboMaster's motion detectors. This will cause the tagged RoboMaster to start hunting down the other RoboMasters.
-5. Artificial intelligence: The RoboMaster should be able to make decisions on its own without input from the user. 
-6. Data visualization: Once data is gathered, we will post-process the data using visualizations and interactive dashboards that will display key metrics and insights to help users understand the relationships between variables and the outputs of the model.
-7. Website: We will create and host a user interface to give an overview of our project and showcase key findings as well as the RoboMaster S1's capabilities.
+4. Collision avoidance: The RoboMaster should be able to avoid collisions with other objects by applying a “braking system” that deploys when it is close to colliding with another object.
+5. Tagging feature: The RoboMaster should be able to “tag” other RoboMasters by firing a gel bead onto another RoboMaster’s motion detectors. This will cause the tagged RoboMaster to start hunting down the other RoboMasters.
+6. Artificial intelligence: The RoboMaster should be able to make decisions on its own without input from the user.
+7. RoboMaster simulation: An offline simulation will be run to generate a list of instructions that the RoboMaster can execute.
+8. Instruction processing: The RoboMaster should be able to accept a list of instructions and execute them.
+9. RoboMaster app spoofing: The RoboMaster app should be spoofed in order to gain new functionality.
+10. Data visualization: Once data is gathered, we will post-process the data using visualizations that will display key metrics and insights to help users understand the relationships between variables and the outputs of the model.
 
 **Project Directory**:
 
 /prototypes/: This directory contains the prototypes for this project. See the [Project Wiki](https://github.com/amandakwong898/robomaster/wiki/Prototypes) for more information.
 
 /post-processing/: This directory contains files for post-processing recorded video footage from the RoboMaster S1.
+
+/json-parsing/: This directory contains files for parsing JSON strings with the RoboMaster S1.
