@@ -1,4 +1,4 @@
-# Simple JSON parser in Python taken from https://github.com/eatonphil/pj
+# JSONFSM parser taken from https://github.com/eggpi/jsonfsm
 
 #-*- coding: utf-8 -*-
 # Copyright (C) 2011 Guilherme P. Gonçalves
