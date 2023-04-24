@@ -49,7 +49,8 @@ while not done:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
-            
+
+    # --- Game Logic ---
     # Move the chased actor
     chased.x += chased_dx
     chased.y += chased_dy
@@ -83,6 +84,7 @@ while not done:
     # print("Score:", score)
     collision_occurred = False
 
+    # --- Drawing ---
     # Clear the screen
     screen.fill((255, 255, 255))
 
@@ -98,12 +100,20 @@ while not done:
     # Update the screen
     pygame.display.flip()
 
+    # --- FPS Limit ---
     pygame.time.Clock().tick(60)
 
 # Close the Pygame window
 pygame.quit()
 
-# Create a JSON object with the instructions for each actor
-instructions = {"chased": chased_instructions, "tagger": tagger_instructions}
-json_str = json.dumps(instructions, indent=4)
-print(json_str)
+# Convert the instruction lists to a JSON object
+json_data = {
+    "instructions": [
+        {"tagger": tagger_instructions},
+        {"chased": chased_instructions}
+    ]
+}
+
+# Write the JSON data to a file
+with open("instructions.json", "w") as f:
+    json.dump(json_data, f)
