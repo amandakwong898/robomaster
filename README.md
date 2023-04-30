@@ -31,6 +31,8 @@ library to analyze and visualize data.
 
 /prototypes/: This directory contains the prototypes for this project. See the [Project Wiki](https://github.com/amandakwong898/robomaster/wiki/Prototypes) for more information.
 
-/post-processing/: This directory contains files for post-processing recorded video footage from the RoboMaster S1.
+/tagging-game/: This directory contains files for the RoboMaster S1 tagging game.
 
-/json-parsing/: This directory contains files for parsing JSON strings with the RoboMaster S1.
+/json-parsing/: This directory contains files for generating and parsing JSON strings for the RoboMaster S1.
+
+/post-processing/: This directory contains files for post-processing recorded video footage from the RoboMaster S1.
