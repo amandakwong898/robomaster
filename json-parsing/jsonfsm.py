@@ -363,13 +363,17 @@ def loads(json, encoding = "utf-8"):
 
     return ret
 
-def execute_commands(obj):
-    for instruction in obj['instructions']:
-        for key, value in instruction.items():
-            # print(key, value)
+def execute_commands(obj, tagger = True):
+   if tagger:
+       commands = obj["instructions"][0]["tagger"]
+   else:
+       commands = obj["instructions"][1]["chased"]
+
+   for command in commands:
+        for key, value in command.items():
             if value == 'move':
-                direction = instruction['direction']
-                distance = instruction['distance'] 
+                direction = command['direction']
+                distance = command['distance'] 
                 if direction == 'forward': 
                     chassis_ctrl.move_with_distance(0, distance)
                 elif direction == 'right': 
@@ -380,8 +384,8 @@ def execute_commands(obj):
                     chassis_ctrl.move_with_distance(-90, distance)
                 print(f'Move params: {direction, distance}')   
             elif value == 'turn':
-                direction = instruction['direction']
-                angle = instruction['angle']
+                direction = command['direction']
+                angle = command['angle']
                 if direction == 'clockwise':
                     chassis_ctrl.rotate_with_degree(rm_define.clockwise, angle)
                 else:
@@ -389,26 +393,412 @@ def execute_commands(obj):
                 print(f'Turn params: {direction, angle}')
 
 def start():
-#     json_str = '''
-# {
-#     "instructions": [
-#         {"command": "move", "direction": "forward", "distance": 1},
-#         {"command": "turn", "direction": "clockwise", "angle": 90},
-#         {"command": "move", "direction": "backward", "distance": 1},
-#         {"command": "turn", "direction": "anticlockwise", "angle": 45},
-#         {"command": "move", "direction": "forward", "distance": 1},
-#         {"command": "turn", "direction": "clockwise", "angle": 180},
-#         {"command": "move", "direction": "forward", "distance": 1},
-#         {"command": "turn", "direction": "left", "angle": 90}
-#     ]
-# }
-# '''
-    
+    json_str = '''
+{
+   "instructions":[
+      {
+         "tagger":[
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            },
+            {
+               "command":"turn",
+               "direction":"clockwise",
+               "angle":90
+            }
+         ]
+      },
+      {
+         "chased":[
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            },
+            {
+               "command":"move",
+               "direction":"forward",
+               "distance":1
+            }
+         ]
+      }
+   ]
+}
+'''
     print("Parsing JSON...")
-    json_str = open('instructions.json')
-    obj = json.load(json_str)
+    obj = loads(json_str)
     print(obj)
-    
     print("Executing commands...")
     execute_commands(obj)
-    json_str.close()

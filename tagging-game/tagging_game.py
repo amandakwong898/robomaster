@@ -183,7 +183,7 @@ class RoboMasterState:
     IDLE = "IDLE"
     TAGGED = "TAGGED"
 
-    CURRENT_STATE = CHASE
+    CURRENT_STATE = PATROL
 
 def get_coroutine():
     """
@@ -321,12 +321,24 @@ def tagged():
 
     return False
 
+def change_led_color(red, blue, green):
+    led_ctrl.set_bottom_led(rm_define.armor_bottom_all, red, blue, green, rm_define.effect_always_on)
+    led_ctrl.set_top_led(rm_define.armor_top_all, red, blue, green, rm_define.effect_always_on)
+
+def sound_recognized_applause_thrice(msg):
+    change_led_color(255, 255, 255)
+    RoboMasterState.CURRENT_STATE = RoboMasterState.IDLE
+
 def start():
     """
     The entry-point method for the program.
     Randomly changes the Robomaster's state before running the corresponding
     coroutine for that state.
     """
+    media_ctrl.enable_sound_recognition(rm_define.sound_detection_applause)
+    media_ctrl.cond_wait(rm_define.cond_sound_recognized_applause_twice)
+    change_led_color(255, 0, 0)
+
     vision_ctrl.enable_detection(rm_define.vision_detection_people)
     current_coroutine = get_coroutine()
 
