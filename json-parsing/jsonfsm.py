@@ -389,26 +389,22 @@ def execute_commands(obj):
                 print(f'Turn params: {direction, angle}')
 
 def start():
-#     json_str = '''
-# {
-#     "instructions": [
-#         {"command": "move", "direction": "forward", "distance": 1},
-#         {"command": "turn", "direction": "clockwise", "angle": 90},
-#         {"command": "move", "direction": "backward", "distance": 1},
-#         {"command": "turn", "direction": "anticlockwise", "angle": 45},
-#         {"command": "move", "direction": "forward", "distance": 1},
-#         {"command": "turn", "direction": "clockwise", "angle": 180},
-#         {"command": "move", "direction": "forward", "distance": 1},
-#         {"command": "turn", "direction": "left", "angle": 90}
-#     ]
-# }
-# '''
-    
+    json_str = '''
+{
+    "instructions": [
+        {"command": "move", "direction": "forward", "distance": 1},
+        {"command": "turn", "direction": "clockwise", "angle": 90},
+        {"command": "move", "direction": "backward", "distance": 1},
+        {"command": "turn", "direction": "anticlockwise", "angle": 45},
+        {"command": "move", "direction": "forward", "distance": 1},
+        {"command": "turn", "direction": "clockwise", "angle": 180},
+        {"command": "move", "direction": "forward", "distance": 1},
+        {"command": "turn", "direction": "left", "angle": 90}
+    ]
+}
+'''
     print("Parsing JSON...")
-    json_str = open('instructions.json')
-    obj = json.load(json_str)
+    obj = loads(json_str)
     print(obj)
-    
     print("Executing commands...")
     execute_commands(obj)
-    json_str.close()
