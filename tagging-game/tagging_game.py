@@ -254,6 +254,24 @@ def chase():
             RoboMasterState.CURRENT_STATE = RoboMasterState.PATROL
             yield
         chassis_ctrl.set_wheel_speed(100,100,100,100)
+
+        hits = vision_ctrl.get_car_detection_info()
+        targets_hit = hits[0]
+
+        if targets_hit > 0:
+            # Height of the bounding box for the closest target.
+            bounding_box_height = get_closest_target_height(hits)
+
+            # Height of the bounding box in mm.
+            height_in_mm = pixels_to_mm(bounding_box_height)
+        
+            # Distance from the Robomaster to the target in m.
+            distance_in_m = distance_in_mm(height_in_mm) / 1000
+
+            if distance_in_m <= 1.5:
+                gun_ctrl.fire_once()
+                gun_ctrl.stop()
+
     print("Finished Chase")
 
 def idle():
@@ -283,6 +301,8 @@ def attack():
     """
     print(RoboMasterState.ATTACK)
     while RoboMasterState.CURRENT_STATE == RoboMasterState.ATTACK:
+        gun_ctrl.fire_once()
+        gun_ctrl.stop()
         yield
     print("Finished Attack")
 
@@ -329,6 +349,14 @@ def sound_recognized_applause_thrice(msg):
     change_led_color(255, 255, 255)
     RoboMasterState.CURRENT_STATE = RoboMasterState.IDLE
 
+def chassis_impact_detection(msg):
+    change_led_color(255, 255, 255)
+    RoboMasterState.CURRENT_STATE = RoboMasterState.IDLE  
+
+def armor_hit_detection_all(msg):
+    change_led_color(255, 255, 255)
+    RoboMasterState.CURRENT_STATE = RoboMasterState.IDLE
+
 def start():
     """
     The entry-point method for the program.
@@ -336,7 +364,9 @@ def start():
     coroutine for that state.
     """
     media_ctrl.enable_sound_recognition(rm_define.sound_detection_applause)
+    armor_ctrl.set_hit_sensitivity(10)
     media_ctrl.cond_wait(rm_define.cond_sound_recognized_applause_twice)
+    gun_ctrl.set_fire_count(1)
     change_led_color(255, 0, 0)
 
     vision_ctrl.enable_detection(rm_define.vision_detection_people)
