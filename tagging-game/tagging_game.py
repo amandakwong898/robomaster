@@ -230,7 +230,7 @@ def patrol():
 
     print(RoboMasterState.CURRENT_STATE)
     while RoboMasterState.CURRENT_STATE == RoboMasterState.PATROL:
-        if vision_ctrl.check_condition(rm_define.cond_recognized_people):
+        if vision_ctrl.check_condition(rm_define.cond_recognized_car):
             RoboMasterState.CURRENT_STATE = RoboMasterState.CHASE
             yield
         current_movement_pattern.__next__()
@@ -249,7 +249,7 @@ def chase():
     """
     print(RoboMasterState.CURRENT_STATE)
     while RoboMasterState.CURRENT_STATE == RoboMasterState.CHASE:
-        if not vision_ctrl.check_condition(rm_define.cond_recognized_people):
+        if not vision_ctrl.check_condition(rm_define.cond_recognized_car):
             chassis_ctrl.stop()
             RoboMasterState.CURRENT_STATE = RoboMasterState.PATROL
             yield
@@ -319,7 +319,7 @@ def flee():
     print(RoboMasterState.FLEE)
     current_movement_pattern = RoboMasterMovements.move_in_cross_pattern(1)
     while RoboMasterState.CURRENT_STATE == RoboMasterState.FLEE:
-        if vision_ctrl.check_condition(rm_define.cond_recognized_people):
+        if vision_ctrl.check_condition(rm_define.cond_recognized_car):
             chassis_ctrl.rotate(rm_define.clockwise)
             time.sleep(3)
             chassis_ctrl.rotate(rm_define.clockwise)
@@ -369,7 +369,7 @@ def start():
     gun_ctrl.set_fire_count(1)
     change_led_color(255, 0, 0)
 
-    vision_ctrl.enable_detection(rm_define.vision_detection_people)
+    vision_ctrl.enable_detection(rm_define.vision_detection_car)
     current_coroutine = get_coroutine()
 
     while RoboMasterState.CURRENT_STATE != RoboMasterState.IDLE:
