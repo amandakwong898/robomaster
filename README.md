@@ -6,14 +6,11 @@
 
 **Project Overview:**
 
-The goal of this project is to create a tag game with multiple RoboMaster S1 devices. One of the RoboMaster 
-devices will act as a "guard" by patrolling an open area in a specific movement pattern. When the RoboMaster 
-spots a target, it will transition into a "chase" state and hunt down the object that it has detected. When the 
-fleeing object is out of sight, the RoboMaster will transition back to its "guard" state.  
+The goal of this project is to create a tag game with multiple RoboMaster S1 devices. One of the RoboMaster devices will act as a “guard” by patrolling an open area in a specific movement pattern. When the RoboMaster spots a target, it will transition into a “chase” state and hunt down the object that it has detected. When the fleeing object is out of sight, the RoboMaster will transition back to its “guard” state. 
 
-Each robot will be equipped with functionalities such as tracking objects, voice commands, and event listeners. 
-This project will post-process RoboMaster data by recording video footage onto an SD card and using an external 
-library to analyze and visualize data.
+Each robot will be equipped with functionalities such as tracking objects, voice commands, and event listeners. An offline simulation will be run to generate a list of instructions that the RoboMaster can execute. The software will spoof the RoboMaster app in order to overcome the built-in limitations of the hardware set by the manufacturer.
+
+This project will employ post-processing techniques from RoboMaster data by recording video footage onto an SD card and using an external library to analyze and visualize data. 
 
 This project will employ post-processing techniques from RoboMaster data by recording video footage onto an SD
 card and using an external library to analyze and visualize data. 
