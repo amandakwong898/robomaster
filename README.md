@@ -30,6 +30,27 @@ card and using an external library to analyze and visualize data.
 9. RoboMaster app spoofing: The RoboMaster app should be spoofed in order to gain new functionality.
 10. Data visualization: Once data is gathered, we will post-process the data using visualizations that will display key metrics and insights to help users understand the relationships between variables and the outputs of the model.
 
+**User manual**
+
+**Tagging game**
+
+1. You will need two RoboMaster S1 devices for the tagging game.
+2. Copy and paste the ``/tagging-game/tagging_game.py`` file into a new program for each RoboMaster S1 device.
+3. For one of the RoboMaster S1 devices, change the default state from PATROL to CHASE.
+4. Execute the code on both RoboMaster S1 devices.
+5. Clap your hands twice in front of each RoboMaster S1 to start the game.
+
+**Offline simulation**
+1. Run ``python /json-parsing/jsonsim.py`` to run the simulation.
+2. Close the file to generate the list of instructions, which will be saved to ``instructions.json``.
+
+**Running generated commands**
+1. Replace the json_str variable in ```/json-parsing/jsonfsm.py``` with the generated results from ``instructions.json``.
+2. Copy and paste the ``/json-parsing/jsonfsm.py`` file into a new program for the RoboMaster S1 device.
+3. Execute the program.
+4. Wait for the RoboMaster to parse the JSON string (this can take awhile with long JSON strings).
+5. The RoboMaster will begin to execute the commands after parsing.
+
 **Project Directory**:
 
 /prototypes/: This directory contains the prototypes for this project. See the [Project Wiki](https://github.com/amandakwong898/robomaster/wiki/Prototypes) for more information.
