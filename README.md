@@ -51,6 +51,10 @@ card and using an external library to analyze and visualize data.
 4. Wait for the RoboMaster to parse the JSON string (this can take awhile with long JSON strings).
 5. The RoboMaster will begin to execute the commands after parsing.
 
+**Analyzing video footage**
+1. Insert SD card into RoboMaster S1. Run the tagging game program to generate MP4 file.
+2. Run the program in ```/post-processing/multiple_object_detection.py``` to accurately identify and track objects within the game environment.
+
 **Project Directory**:
 
 /prototypes/: This directory contains the prototypes for this project. See the [Project Wiki](https://github.com/amandakwong898/robomaster/wiki/Prototypes) for more information.
