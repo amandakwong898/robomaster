@@ -12,7 +12,7 @@ Each robot will be equipped with functionalities such as tracking objects, voice
 
 This project will employ post-processing techniques from RoboMaster data by recording video footage onto an SD card and using an external library to analyze and visualize data.
 
-[Uploading Screenshot 2023-05-15 at 9.47.29 PM.png…]()
+![image](/CSM_Poster.png?raw=true "Optional Title")
 ![image](https://technabob.com/blog/wp-content/uploads/2019/06/dji_robomaster_s1_robot_3.jpg)
 ![image](https://pavcreations.com/wp-content/uploads/2022/05/pav-creations-enemy-AI-diagram-finite-state-machine3.png)
 
