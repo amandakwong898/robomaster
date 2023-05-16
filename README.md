@@ -12,7 +12,7 @@ Each robot will be equipped with functionalities such as tracking objects, voice
 
 This project will employ post-processing techniques from RoboMaster data by recording video footage onto an SD card and using an external library to analyze and visualize data.
 
-[CSM Showcase - Amanda Kwong.pptx](https://github.com/amandakwong898/robomaster/files/11483196/CSM.Showcase.-.Amanda.Kwong.pptx)
+![image](https://docs.google.com/presentation/d/17KVjK4jgCT5gDZ-LI31GjueFUYzlkRkp/edit?usp=sharing&ouid=117853640078030559136&rtpof=true&sd=true)
 ![image](https://technabob.com/blog/wp-content/uploads/2019/06/dji_robomaster_s1_robot_3.jpg)
 ![image](https://pavcreations.com/wp-content/uploads/2022/05/pav-creations-enemy-AI-diagram-finite-state-machine3.png)
 
