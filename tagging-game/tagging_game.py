@@ -173,7 +173,7 @@ class RoboMasterState:
     IDLE: Waits and does nothing.
     TAGGED: Once detected by another RoboMaster, transitions to CHASE state.
 
-    CURRENT_STATE: The RoboMaster's current state. The default is IDLE.
+    CURRENT_STATE: The RoboMaster's current state. The default is PATROL.
 
     """
     PATROL = "PATROL"
@@ -181,7 +181,6 @@ class RoboMasterState:
     ATTACK = "ATTACK"
     FLEE = "FLEE"
     IDLE = "IDLE"
-    TAGGED = "TAGGED"
 
     CURRENT_STATE = PATROL
 
@@ -292,6 +291,7 @@ def idle():
 def attack():
     """
     Attacks while the current state is RoboMasterState.ATTACK.
+    This state is currently unused.
 
     Parameters:
     none
@@ -328,19 +328,6 @@ def flee():
     print("Finished Flee")
     chassis_ctrl.stop()
 
-def tagged():
-    """
-    Determines if RoboMaster is tagged (still ip - physical attack? within range? etc.)
-
-    Parameters:
-    none
-
-    Returns:
-    void   
-    """
-
-    return False
-
 def change_led_color(red, blue, green):
     led_ctrl.set_bottom_led(rm_define.armor_bottom_all, red, blue, green, rm_define.effect_always_on)
     led_ctrl.set_top_led(rm_define.armor_top_all, red, blue, green, rm_define.effect_always_on)
@@ -370,6 +357,8 @@ def start():
     change_led_color(255, 0, 0)
 
     vision_ctrl.enable_detection(rm_define.vision_detection_car)
+    # Start recording
+    media_ctrl.record(1)
     current_coroutine = get_coroutine()
 
     while RoboMasterState.CURRENT_STATE != RoboMasterState.IDLE:
@@ -382,3 +371,6 @@ def start():
             # general exception.
         except Exception:
             current_coroutine = get_coroutine()
+    # Stop recording
+    media_ctrl.record(1)
+     
