@@ -12,6 +12,12 @@ Each robot will be equipped with functionalities such as tracking objects, voice
 
 This project will employ post-processing techniques from RoboMaster data by recording video footage onto an SD card and using an external library to analyze and visualize data. 
 
+This project will employ post-processing techniques from RoboMaster data by recording video footage onto an SD
+card and using an external library to analyze and visualize data. 
+
+![image](https://technabob.com/blog/wp-content/uploads/2019/06/dji_robomaster_s1_robot_3.jpg)
+![image](https://pavcreations.com/wp-content/uploads/2022/05/pav-creations-enemy-AI-diagram-finite-state-machine3.png)
+
 **Project Requirements:**
 1. Movement patterns: The RoboMaster should be able to move in specific patterns, resembling the way that a security guard patrols a shopping mall.
 2. Object distance detection: The RoboMaster should be able to detect how far away an object is by using the focal length and DPI of its camera.
